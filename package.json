@@ -1,0 +1,24 @@
+{
+  "name": "ddb-wrapper",
+  "version": "1.0.0",
+  "description": "A module wrapper around the DynamoDB sdk, to simplify common operations.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matt-kruse/ddb-wrapper.git"
+  },
+  "keywords": [
+    "aws",
+    "dynamodb",
+    "ddb"
+  ],
+  "author": "Matt Kruse <github@mattkruse.com> (http://mattkruse.com/)",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matt-kruse/ddb-wrapper/issues"
+  },
+  "homepage": "https://github.com/matt-kruse/ddb-wrapper#readme"
+}
