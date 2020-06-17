@@ -166,8 +166,9 @@ module.exports = function(region) {
         if (typeof name==="string") {
           for (let part of name.split('.')) {
             let k = "#" + i++;
-            parts.push(k);
-            names[k] = part;
+            let non_array_part = part.replace(/\[[^\]]*\]/g,'');
+            parts.push(part.replace(non_array_part,k));
+            names[k] = non_array_part;
           }
           return parts.join(".");
         }
