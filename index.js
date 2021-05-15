@@ -2,7 +2,7 @@
 let AWS = require('aws-sdk');
 
 module.exports = function(region) {
-  // Set the region 
+  // Set the region
   AWS.config.update({region: region});
 
   let ENABLE_LOGGING = false;
@@ -30,17 +30,17 @@ module.exports = function(region) {
       // Call DynamoDB to delete the specified table
       return ddb.deleteTable({"TableName":tableName}).promise();
     }
-    
+
     // CREATE A TABLE
     // ==============
     ,'createSimpleTable': async function(tableName, key, keyType) {
       let params = {
         AttributeDefinitions: [
           {
-            AttributeName: key, 
+            AttributeName: key,
             AttributeType: (keyType || "S")
           }
-        ], 
+        ],
         KeySchema: [
           {
             AttributeName: key,
@@ -60,11 +60,11 @@ module.exports = function(region) {
       // Call DynamoDB to create the table
       return ddb.createTable(params).promise();
     }
-    
+
     ,'describe': async function(table) {
       return ddb.describeTable( {TableName:table} ).promise();
     }
-    
+
     // WAIT FOR A TABLE TO EXIST BEFORE PROCEEDING
     // ===========================================
     // TODO: Use waitFor() from the API instead
@@ -74,9 +74,9 @@ module.exports = function(region) {
         let wait = wait || 1000;
         let check = function() {
           wrapper.describe(table)
-            .then( (data)=>{ 
+            .then( (data)=>{
               if (data && data.Table && "ACTIVE"==data.Table.TableStatus) {
-                return resolve(data); 
+                return resolve(data);
               }
               throw("Not Active");
             })
@@ -132,7 +132,7 @@ module.exports = function(region) {
       }
       throw "lock_timeout";
     }
-    
+
     // INSERT
     // ======
     ,'put': async function(table, item) {
@@ -233,7 +233,7 @@ module.exports = function(region) {
       log(params);
       return docClient.update(params).promise();
     }
-    
+
     // RETRIEVE
     // ========
     ,'get': async function(table, keyAttribute, keyValue) {
@@ -245,12 +245,12 @@ module.exports = function(region) {
           return item.Item;
         });
     }
-    ,'scan': async function(table, condition) {
-      let params = {TableName:table};
+    ,'scan': async function(table, params) {
+      params = params || {};
+      params.TableName = table;
       log(params);
       let lastKey = null;
       let results = [];
-      let page = 1;
       return new Promise(async (resolve,reject)=>{
         do {
           if (lastKey) { params.ExclusiveStartKey = lastKey; }
@@ -269,6 +269,6 @@ module.exports = function(region) {
       });
     }
   };
-  
+
   return wrapper;
 };

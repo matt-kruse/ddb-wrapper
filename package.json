@@ -1,6 +1,6 @@
 {
   "name": "ddb-wrapper",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A module wrapper around the DynamoDB sdk, to simplify common operations.",
   "main": "index.js",
   "scripts": {
